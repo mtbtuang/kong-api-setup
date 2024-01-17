@@ -1,9 +1,5 @@
 version: '3'
 
-networks:
-  kong-net:
-    driver: bridge
-
 services:
   # Postgres Database
   kong_database:
@@ -22,17 +18,13 @@ services:
       timeout: 10s
       retries: 10
 
-  #kong database migrations
+  # Kong database migrations
   kong-migrations:
     image: kong:latest
     command: "kong migrations bootstrap"
-    networks:
-      - kong-net
     restart: on-failure
     environment:
-      - KONG_PG_HOST: kong-database
-    links:
-      - kong-database
+      - KONG_PG_HOST=kong_database
     depends_on:
       - kong_database
 
@@ -40,10 +32,8 @@ services:
   kong:
     image: kong:latest
     restart: always
-    networks:
-      - kong-net
     environment:
-      KONG_PG_HOST: kong-database
+      KONG_PG_HOST: kong_database
       KONG_PROXY_LISTEN: 0.0.0.0:80
       KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
@@ -68,11 +58,9 @@ services:
     image: pantsel/konga:next
     container_name: konga
     restart: always
-    networks:
-      - kong-net
     environment:
       DB_ADAPTER: postgres
-      DB_HOST: kong-database
+      DB_HOST: kong_database
       DB_USER: kong
       TOKEN_SECRET: ${TOKEN_SECRET}
       DB_DATABASE: konga_db
