@@ -31,7 +31,7 @@ services:
   # Database migrations
   kong-migrations:
     image: ${KONG_DOCKER_TAG:-kong:latest}
-    command: kong migrations bootstrap
+    command: ["kong", "migrations", "bootstrap"]
     networks:
       - kong-net
     depends_on:
@@ -67,7 +67,7 @@ services:
 
   kong-prepare:
     image: pantsel/konga:latest
-    command: "-c prepare -a postgres -u postgresql://kong:${KONG_PG_PASSWORD:-kong}@kong-database:5432/konga"
+    command: ["-c", "prepare", "-a", "postgres", "-u", "postgresql://kong:${KONG_PG_PASSWORD:-kong}@kong-database:5432/konga"]
     networks:
       - kong-net
     restart: on-failure
