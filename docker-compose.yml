@@ -74,7 +74,7 @@ services:
       DB_ADAPTER: postgres
       DB_HOST: kong-database
       DB_USER: kong
-      TOKEN_SECRET: "your_token_secret_here"
+      TOKEN_SECRET: ${TOKEN_SECRET}
       DB_DATABASE: konga_db
       NODE_ENV: production
     depends_on:
