@@ -88,7 +88,7 @@ services:
   # Konga
   konga:
     image: pantsel/konga:latest
-     kongga
+    container_name: kongga
     restart: always
     networks:
         - kong-net   
