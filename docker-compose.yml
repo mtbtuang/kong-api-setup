@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: ${KONG_PG_PASSWORD:-kong}
       POSTGRES_DB: kong
     ports:
-      - "5432:5432"
+      - "202.28.49.122:5432:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "kong"]
       interval: 30s
@@ -100,4 +100,4 @@ services:
       - konga-prepare 
       - kong-database
     ports:
-      - "1337:1337"
+      - "202.28.49.122:1337:1337" 
